@@ -60,6 +60,14 @@ return TOK_OPEN_PARENTHESIS;
 return TOK_CLOSE_PARENTHESIS;
 }
 
+"{" {
+  return TOK_OPEN_BRACE;
+}
+
+"}" {
+    return TOK_CLOSE_BRACE;
+}
+
 "print" {
 return TOK_PRINT;
 }
