@@ -904,22 +904,14 @@ YY_RULE_SETUP
 return yytext[0];
 }
 	YY_BREAK
-case YY_STATE_EOF(INITIAL):
-#line 89 "facile.lex"
-{
-  yypop_buffer_state();
-if ( !YY_CURRENT_BUFFER )
-{
-yyterminate();
-}
-}
-	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 97 "facile.lex"
+#line 90 "facile.lex"
 ECHO;
 	YY_BREAK
-#line 923 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
+#line 913 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
+case YY_STATE_EOF(INITIAL):
+	yyterminate();
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1934,7 +1926,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 97 "facile.lex"
+#line 90 "facile.lex"
 
 
 /*

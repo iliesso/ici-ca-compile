@@ -83,6 +83,7 @@ extern int yyerror(const char *msg);
 extern FILE *yyin;
 extern FILE *yyout;
 extern char *yytext;
+static GHashTable *table = NULL;
 %}
 
 %define parse.error verbose
@@ -98,13 +99,18 @@ GNode * node;
 %token TOK_AFFECTATION	":="
 %token TOK_SEMI_COLON	";"
 %token TOK_IF	"if"
+%token TOK_ELSE "else"
+%token TOK_ELSEIF "elseif"
 %token TOK_THEN	"then"
+%token TOK_ENDIF "endif"
 %left TOK_ADD	"+"
 %left TOK_SUB	"-"
 %left TOK_MUL	"*"
 %left TOK_DIV	"/"
 %token TOK_OPEN_PARENTHESIS "("
 %token TOK_CLOSE_PARENTHESIS ")"
+%token TOK_OPEN_BRACE "{"
+%token TOK_CLOSE_BRACE "}"
 %token TOK_PRINT "print"
 %token TOK_READ "read"
 
@@ -118,7 +124,6 @@ GNode * node;
 %type<node> number
 
 %%
-
 //Arbre syntaxique et ses noeuds
 
 program: code{
@@ -199,12 +204,13 @@ expression:
 	TOK_OPEN_PARENTHESIS expression TOK_CLOSE_PARENTHESIS {
 		$$ = $2;
 	}
+|
+	TOK_IF TOK_OPEN_PARENTHESIS expression TOK_CLOSE_PARENTHESIS 
 ;
 
 identifier:
 	TOK_IDENTIFIER {
 		$$ = g_node_new("identifier");
-		static GHashTable *table = NULL;
         if (!table) {
             table = g_hash_table_new(g_str_hash, g_str_equal);
         }
@@ -214,6 +220,7 @@ identifier:
 			value = g_hash_table_size(table) + 1;
 			g_hash_table_insert(table, strdup($1), (gpointer) value);
 		}
+		guint size = g_hash_table_size(table);
 		g_node_append_data($$, (gpointer) value);
 	};
 
@@ -275,9 +282,9 @@ void produce_code(GNode* node){
 
 void begin_code()
 {
-	char *module_name;
-	int max_stack;
-	fprintf(yyin,
+	char *module_name = "texte";
+	int max_stack = 10;
+	fprintf(yyout,
 		".assembly %s {}\n"
 		".method public static void Main() cil managed\n"
 		"{\n"      
@@ -287,24 +294,22 @@ void begin_code()
 		module_name,
 		max_stack
 	);
-	static GHashTable *table = NULL;
-    if (!table) {
-        table = g_hash_table_new(g_str_hash, g_str_equal);
-    }
-	guint size = g_hash_table_size(table);
+	//AVOIR LA TAILLE DE LA TABLe!
+    guint size = g_hash_table_size(table);
 	guint i;
+	//Pour chaque identifieur à initialiser en mémoire, ajouter un int32 au code assembleur.
 	for (i = 0; i < size; i++) {
 		if (i) {
-			fprintf(yyin, ", ");
+			fprintf(yyout, ", ");
 		}
-		fprintf(yyin, "int32");
+		fprintf(yyout, "int32");
 	}
-	fprintf(yyin, ")\n");
+	fprintf(yyout, ")\n");
 }
 
 void end_code()
 {
-	fprintf(yyin, "	ret\n}\n");
+	fprintf(yyout, "	ret\n}\n");
 }
 
 int yyerror(const char *msg){
@@ -349,16 +354,16 @@ if (argc == 2) {
         }
         onechar++;
     }
-    if (stdin = fopen(file_name_input, "r")) {
-        if (yyin = fopen(basename, "w")) {
+    if (yyin = fopen(file_name_input, "r")) {
+        if (yyout = fopen(basename, "w")) {
             //GHashTable* table = g_hash_table_new_full(g_str_hash, g_str_equal, free, NULL);
-            yyparse();
+			yyparse();
             //g_hash_table_destroy(table);
-            fclose(yyin);
+            fclose(yyout);
             fclose(stdin);
         } else {
             free(basename);
-            fclose(stdin);
+            fclose(yyin);
             fprintf(stderr, "Output filename cannot be opened\n");
             return EXIT_FAILURE;
         }
