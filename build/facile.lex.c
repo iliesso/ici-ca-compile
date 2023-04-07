@@ -371,8 +371,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 	(yy_hold_char) = *yy_cp; \
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 17
-#define YY_END_OF_BUFFER 18
+#define YY_NUM_RULES 22
+#define YY_END_OF_BUFFER 23
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -380,12 +380,13 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[35] =
+static const flex_int16_t yy_accept[47] =
     {   0,
-        0,    0,   18,   16,   15,   15,    9,   10,    7,    5,
-        6,    8,   14,   16,    3,   13,   13,   13,   13,   13,
-        4,   13,    1,   13,   13,   13,   13,   13,   13,   13,
-       12,    2,   11,    0
+        0,    0,   23,   21,   20,   20,   12,   13,   10,    8,
+        9,   11,   19,   21,    6,   18,   18,   18,   18,   18,
+       18,   14,   15,    7,   18,   18,   18,    1,   18,   18,
+       18,   18,   18,   18,   18,   18,    3,   18,   18,   17,
+        2,   18,    5,   16,    4,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -401,9 +402,9 @@ static const YY_CHAR yy_ec[256] =
        15,   15,   15,   15,   15,   15,   15,   15,   15,   15,
         1,    1,    1,    1,    1,    1,   16,   15,   15,   17,
 
-       18,   19,   15,   20,   21,   15,   15,   15,   15,   22,
-       15,   23,   15,   24,   15,   25,   15,   15,   15,   15,
-       15,   15,    1,    1,    1,    1,    1,    1,    1,    1,
+       18,   19,   15,   20,   21,   15,   15,   22,   15,   23,
+       15,   24,   15,   25,   26,   27,   15,   15,   15,   15,
+       15,   15,   28,    1,   29,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -420,55 +421,62 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[26] =
+static const YY_CHAR yy_meta[30] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
         2,    1,    1,    1,    2,    2,    2,    2,    2,    2,
-        2,    2,    2,    2,    2
+        2,    2,    2,    2,    2,    2,    2,    1,    1
     } ;
 
-static const flex_int16_t yy_base[36] =
+static const flex_int16_t yy_base[48] =
     {   0,
-        0,    0,   39,   40,   40,   40,   40,   40,   40,   40,
-       40,   40,   40,   24,   40,    0,   18,   12,   17,   14,
-       40,    0,    0,   12,   16,   13,    8,   12,    6,    2,
-        0,    0,    0,   40,   24
+        0,    0,   52,   53,   53,   53,   53,   53,   53,   53,
+       53,   53,   53,   37,   53,    0,    8,   31,   24,   30,
+       27,   53,   53,   53,    0,   20,   28,    0,   23,   27,
+       24,   23,   19,   16,   21,   14,   15,   16,    7,    0,
+        0,   14,    0,    0,    0,   53,   30
     } ;
 
-static const flex_int16_t yy_def[36] =
+static const flex_int16_t yy_def[48] =
     {   0,
-       34,    1,   34,   34,   34,   34,   34,   34,   34,   34,
-       34,   34,   34,   34,   34,   35,   35,   35,   35,   35,
-       34,   35,   35,   35,   35,   35,   35,   35,   35,   35,
-       35,   35,   35,    0,   34
+       46,    1,   46,   46,   46,   46,   46,   46,   46,   46,
+       46,   46,   46,   46,   46,   47,   47,   47,   47,   47,
+       47,   46,   46,   46,   47,   47,   47,   47,   47,   47,
+       47,   47,   47,   47,   47,   47,   47,   47,   47,   47,
+       47,   47,   47,   47,   47,    0,   46
     } ;
 
-static const flex_int16_t yy_nxt[66] =
+static const flex_int16_t yy_nxt[83] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
-        4,   14,   15,    4,   16,   16,   16,   16,   16,   16,
-       17,   16,   18,   19,   20,   22,   33,   32,   31,   30,
-       29,   28,   27,   26,   25,   24,   23,   21,   34,    3,
-       34,   34,   34,   34,   34,   34,   34,   34,   34,   34,
-       34,   34,   34,   34,   34,   34,   34,   34,   34,   34,
-       34,   34,   34,   34,   34
+        4,   14,   15,    4,   16,   16,   16,   17,   16,   16,
+       18,   16,   16,   19,   20,   16,   21,   22,   23,   26,
+       27,   25,   45,   44,   43,   42,   41,   40,   39,   38,
+       37,   36,   35,   34,   33,   32,   31,   30,   29,   28,
+       24,   46,    3,   46,   46,   46,   46,   46,   46,   46,
+       46,   46,   46,   46,   46,   46,   46,   46,   46,   46,
+       46,   46,   46,   46,   46,   46,   46,   46,   46,   46,
+       46,   46
     } ;
 
-static const flex_int16_t yy_chk[66] =
+static const flex_int16_t yy_chk[83] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,   35,   30,   29,   28,   27,
-       26,   25,   24,   20,   19,   18,   17,   14,    3,   34,
-       34,   34,   34,   34,   34,   34,   34,   34,   34,   34,
-       34,   34,   34,   34,   34,   34,   34,   34,   34,   34,
-       34,   34,   34,   34,   34
+        1,    1,    1,    1,    1,    1,    1,    1,    1,   17,
+       17,   47,   42,   39,   38,   37,   36,   35,   34,   33,
+       32,   31,   30,   29,   27,   26,   21,   20,   19,   18,
+       14,    3,   46,   46,   46,   46,   46,   46,   46,   46,
+       46,   46,   46,   46,   46,   46,   46,   46,   46,   46,
+       46,   46,   46,   46,   46,   46,   46,   46,   46,   46,
+       46,   46
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[18] =
+static const flex_int32_t yy_rule_can_match_eol[23] =
     {   0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,     };
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    1, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -489,8 +497,8 @@ char *yytext;
   #include <assert.h>
   #include <glib.h>
   #include "facile.y.h"
-#line 493 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
-#line 494 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
+#line 501 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
+#line 502 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
 
 #define INITIAL 0
 
@@ -710,7 +718,7 @@ YY_DECL
 #line 9 "facile.lex"
 
 
-#line 714 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
+#line 722 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -737,13 +745,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 35 )
+				if ( yy_current_state >= 47 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 40 );
+		while ( yy_base[yy_current_state] != 53 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -781,135 +789,156 @@ case 1:
 YY_RULE_SETUP
 #line 11 "facile.lex"
 {
-    assert(printf("'if' found"));
     return TOK_IF;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 16 "facile.lex"
+#line 15 "facile.lex"
 {
-    assert (printf("'then' found"));
     return TOK_THEN;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 21 "facile.lex"
+#line 19 "facile.lex"
 {
-assert(printf("';' found"));
-return TOK_SEMI_COLON;
+    return TOK_ELSE;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "facile.lex"
+#line 23 "facile.lex"
 {
-assert(printf("':=' found"));
-return TOK_AFFECTATION;
+    return TOK_ELSEIF;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 31 "facile.lex"
+#line 27 "facile.lex"
 {
-assert(printf("'+' found"));
-return TOK_ADD;
+    return TOK_ENDIF;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 36 "facile.lex"
+#line 31 "facile.lex"
 {
-assert(printf("'-' found"));
-return TOK_SUB;
+return TOK_SEMI_COLON;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 41 "facile.lex"
+#line 35 "facile.lex"
 {
-assert(printf("'*' found"));
-return TOK_MUL;
+return TOK_AFFECTATION;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 46 "facile.lex"
+#line 39 "facile.lex"
 {
-assert(printf("'/' found"));
-return TOK_DIV;
+return TOK_ADD;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 51 "facile.lex"
+#line 43 "facile.lex"
 {
-assert(printf("'(' found"));
-return TOK_OPEN_PARENTHESIS;
+return TOK_SUB;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 56 "facile.lex"
+#line 47 "facile.lex"
 {
-assert(printf("')' found"));
-return TOK_CLOSE_PARENTHESIS;
+return TOK_MUL;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 61 "facile.lex"
+#line 51 "facile.lex"
 {
-assert(printf("'print' found"));
-return TOK_PRINT;
+return TOK_DIV;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 66 "facile.lex"
+#line 55 "facile.lex"
 {
-assert(printf("'read' found"));
-return TOK_READ;
+return TOK_OPEN_PARENTHESIS;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 71 "facile.lex"
+#line 59 "facile.lex"
 {
-  assert(printf("identifier '%s(%d)' found", yytext, yyleng));
-  yylval.string = yytext;
-  return TOK_IDENTIFIER;
+return TOK_CLOSE_PARENTHESIS;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 77 "facile.lex"
+#line 63 "facile.lex"
 {
-  assert(printf("number '%s(%d)' found", yytext, yyleng));
-  sscanf(yytext, "%lu", &yylval.number);
-  return TOK_NUMBER;
+  return TOK_OPEN_BRACE;
 }
 	YY_BREAK
 case 15:
-/* rule 15 can match eol */
 YY_RULE_SETUP
-#line 83 "facile.lex"
-;
+#line 67 "facile.lex"
+{
+    return TOK_CLOSE_BRACE;
+}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 85 "facile.lex"
+#line 71 "facile.lex"
 {
-return yytext[0];
+return TOK_PRINT;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 90 "facile.lex"
+#line 75 "facile.lex"
+{
+return TOK_READ;
+}
+	YY_BREAK
+case 18:
+YY_RULE_SETUP
+#line 79 "facile.lex"
+{
+  yylval.string = yytext;
+  return TOK_IDENTIFIER;
+}
+	YY_BREAK
+case 19:
+YY_RULE_SETUP
+#line 84 "facile.lex"
+{
+  sscanf(yytext, "%lu", &yylval.number);
+  return TOK_NUMBER;
+}
+	YY_BREAK
+case 20:
+/* rule 20 can match eol */
+YY_RULE_SETUP
+#line 89 "facile.lex"
+;
+	YY_BREAK
+case 21:
+YY_RULE_SETUP
+#line 91 "facile.lex"
+{
+return yytext[0];
+}
+	YY_BREAK
+case 22:
+YY_RULE_SETUP
+#line 96 "facile.lex"
 ECHO;
 	YY_BREAK
-#line 913 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
+#line 942 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.lex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1206,7 +1235,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 35 )
+			if ( yy_current_state >= 47 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1234,11 +1263,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 35 )
+		if ( yy_current_state >= 47 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 34);
+	yy_is_jam = (yy_current_state == 46);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1926,7 +1955,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 90 "facile.lex"
+#line 96 "facile.lex"
 
 
 /*
