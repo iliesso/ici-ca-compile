@@ -122,6 +122,7 @@ GNode * node;
 %type<node> read
 %type<node> affectation
 %type<node> number
+%type<node> statement
 
 %%
 //Arbre syntaxique et ses noeuds
@@ -137,13 +138,32 @@ program: code{
 code: 
 	code instruction { 
 		$$ = g_node_new("code");  //Dollar dollar représente la valeur des non terminaux correspondant à la règle code.
-		g_node_append($$, $1);	  //On met nombre,
+		g_node_append($$, $1);	  //Chaque instruction est ajoutée au code,
 		g_node_append($$, $2);	  //On ajoute le 2: identifier. Tout cela doit être reconne comme du code.
 	}
 |
 	{
 		$$ = g_node_new("");
 	};
+
+statement:
+	TOK_IF TOK_OPEN_PARENTHESIS statement TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE TOK_ELSE TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
+		$$ = g_node_new("return"); //Return value
+		if($3 != 0){			   //Si le test marche, alors return prend la valeur
+			$$ = $6;
+		} else{
+			$$ = $10;			   //Sinon, return prend la valeur du else
+		}
+	}
+|
+	TOK_IF TOK_OPEN_PARENTHESIS statement TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
+		$$ = g_node_new("return"); //Return value
+		if($3 != 0){			   //Si le test marche, alors return prend la valeur
+			$$ = $6;
+		}
+	}
+|
+	expression;
 
 //On définit ici tout ce qui doit être reconnu comme une instruction.
 instruction: 
@@ -171,6 +191,8 @@ read:
 		$$ = g_node_new("read");
 		g_node_append($$, $2);
 	}
+;
+
 
 expression:
 	identifier 
@@ -204,8 +226,6 @@ expression:
 	TOK_OPEN_PARENTHESIS expression TOK_CLOSE_PARENTHESIS {
 		$$ = $2;
 	}
-|
-	TOK_IF TOK_OPEN_PARENTHESIS expression TOK_CLOSE_PARENTHESIS 
 ;
 
 identifier:
@@ -250,7 +270,10 @@ void produce_code(GNode* node){
 	} else if (node->data == "affectation"){
 		produce_code(g_node_nth_child(node, 1));
 		fprintf(yyout, "stloc\t%ld\n", (long)g_node_nth_child(g_node_nth_child(node, 0), 0)->data -1);
-	} else if (node->data == "add"){
+	} else if (node->data == "statement"){ 
+		produce_code(g_node_nth_child(node, 0));
+		fprintf(yyout, "statement\n");
+	}else if (node->data == "add"){
 		produce_code(g_node_nth_child(node, 0));
 		produce_code(g_node_nth_child(node, 1));
 		fprintf(yyout, "add\n");
