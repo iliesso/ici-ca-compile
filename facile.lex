@@ -76,7 +76,51 @@ return TOK_PRINT;
 return TOK_READ;
 }
 
-[a-zA-Z][a-zA-Z0-9]* {
+"true" {
+return TOK_TRUE;
+}
+
+"false" {
+return TOK_FALSE;
+}
+
+">=" {
+return TOK_GREATER_EQUAL;
+}
+
+"<=" {
+return TOK_LESSER_EQUAL;
+}
+
+">" {
+return TOK_GREATER;
+}
+
+"<" {
+return TOK_LESSER;
+}
+
+"=" {
+return TOK_EQUALS;
+}
+
+"#" {
+return TOK_NOTEQUALS;
+}
+
+"not" {
+return TOK_NOT;
+}
+
+"and" {
+return TOK_AND;
+}
+
+"or" {
+return TOK_OR;
+}
+
+[a-zA-Z][a-zA-Z0-9_]* {
   yylval.string = yytext;
   return TOK_IDENTIFIER;
 }
