@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//path to the bison executable
+BISON_EXECUTABLE:FILEPATH=/usr/bin/bison
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -22,7 +25,7 @@ CMAKE_AR:FILEPATH=/usr/bin/ar
 
 //Choose the type of build, options are: None Debug Release RelWithDebInfo
 // MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=
+CMAKE_BUILD_TYPE:STRING=Debug
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -122,13 +125,13 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 CMAKE_PROJECT_NAME:STATIC=facile
 
 //Value Computed by CMake
-CMAKE_PROJECT_VERSION:STATIC=0.1.0
+CMAKE_PROJECT_VERSION:STATIC=0.6.0
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION_MAJOR:STATIC=0
 
 //Value Computed by CMake
-CMAKE_PROJECT_VERSION_MINOR:STATIC=1
+CMAKE_PROJECT_VERSION_MINOR:STATIC=6
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION_PATCH:STATIC=0
@@ -237,6 +240,12 @@ FLEX_INCLUDE_DIR:PATH=/usr/include
 //Path to the fl library
 FL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libfl.so
 
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+
 //Value Computed by CMake
 facile_BINARY_DIR:STATIC=/home/ilja/Documents/Work/L3 Info/projetFlexbison/build
 
@@ -246,11 +255,16 @@ facile_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 facile_SOURCE_DIR:STATIC=/home/ilja/Documents/Work/L3 Info/projetFlexbison
 
+//Path to a library.
+pkgcfg_lib_GLIB2_glib-2.0:FILEPATH=/usr/lib/x86_64-linux-gnu/libglib-2.0.so
+
 
 ########################
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: BISON_EXECUTABLE
+BISON_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
@@ -398,12 +412,60 @@ CPACK_BINARY_TGZ-ADVANCED:INTERNAL=1
 CPACK_BINARY_TXZ-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CPACK_BINARY_TZ
 CPACK_BINARY_TZ-ADVANCED:INTERNAL=1
+//Details about finding BISON
+FIND_PACKAGE_MESSAGE_DETAILS_BISON:INTERNAL=[/usr/bin/bison][v3.8.2()]
 //Details about finding FLEX
 FIND_PACKAGE_MESSAGE_DETAILS_FLEX:INTERNAL=[/usr/bin/flex][v2.6.4()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29.2()]
 //ADVANCED property for variable: FLEX_EXECUTABLE
 FLEX_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: FLEX_INCLUDE_DIR
 FLEX_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: FL_LIBRARY
 FL_LIBRARY-ADVANCED:INTERNAL=1
+GLIB2_CFLAGS:INTERNAL=-I/usr/include/glib-2.0;-I/usr/lib/x86_64-linux-gnu/glib-2.0/include
+GLIB2_CFLAGS_I:INTERNAL=
+GLIB2_CFLAGS_OTHER:INTERNAL=
+GLIB2_FOUND:INTERNAL=1
+GLIB2_INCLUDEDIR:INTERNAL=/usr/include
+GLIB2_INCLUDE_DIRS:INTERNAL=/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include
+GLIB2_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lglib-2.0
+GLIB2_LDFLAGS_OTHER:INTERNAL=
+GLIB2_LIBDIR:INTERNAL=/usr/lib/x86_64-linux-gnu
+GLIB2_LIBRARIES:INTERNAL=glib-2.0
+GLIB2_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+GLIB2_LIBS:INTERNAL=
+GLIB2_LIBS_L:INTERNAL=
+GLIB2_LIBS_OTHER:INTERNAL=
+GLIB2_LIBS_PATHS:INTERNAL=
+GLIB2_MODULE_NAME:INTERNAL=glib-2.0
+GLIB2_PREFIX:INTERNAL=/usr
+GLIB2_STATIC_CFLAGS:INTERNAL=-I/usr/include/glib-2.0;-I/usr/lib/x86_64-linux-gnu/glib-2.0/include
+GLIB2_STATIC_CFLAGS_I:INTERNAL=
+GLIB2_STATIC_CFLAGS_OTHER:INTERNAL=
+GLIB2_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/glib-2.0;/usr/lib/x86_64-linux-gnu/glib-2.0/include
+GLIB2_STATIC_LDFLAGS:INTERNAL=-L/usr/lib/x86_64-linux-gnu;-lglib-2.0;-pthread;-lm;-lpcre
+GLIB2_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
+GLIB2_STATIC_LIBDIR:INTERNAL=
+GLIB2_STATIC_LIBRARIES:INTERNAL=glib-2.0;m;pcre
+GLIB2_STATIC_LIBRARY_DIRS:INTERNAL=/usr/lib/x86_64-linux-gnu
+GLIB2_STATIC_LIBS:INTERNAL=
+GLIB2_STATIC_LIBS_L:INTERNAL=
+GLIB2_STATIC_LIBS_OTHER:INTERNAL=
+GLIB2_STATIC_LIBS_PATHS:INTERNAL=
+GLIB2_VERSION:INTERNAL=2.72.4
+GLIB2_glib-2.0_INCLUDEDIR:INTERNAL=
+GLIB2_glib-2.0_LIBDIR:INTERNAL=
+GLIB2_glib-2.0_PREFIX:INTERNAL=
+GLIB2_glib-2.0_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
+__pkg_config_arguments_GLIB2:INTERNAL=REQUIRED;glib-2.0
+__pkg_config_checked_GLIB2:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_GLIB2_glib-2.0
+pkgcfg_lib_GLIB2_glib-2.0-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib/x86_64-linux-gnu
 
