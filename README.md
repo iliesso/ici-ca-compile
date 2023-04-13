@@ -65,6 +65,6 @@ write your "facile" code in a <filename>.facile file, then compile it as an exec
 ```bash
   ./facile <filename>.facile
   ilasm <filename>.il
-  ./<filename>
+  ./<filename>.exe
 ```
 
