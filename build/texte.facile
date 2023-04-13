@@ -1,0 +1,10 @@
+read a;
+read b;
+c := 0;
+if (a>b) {
+    if (a > c){
+        print c;
+    }
+} else {
+    print b;
+}
