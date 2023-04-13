@@ -1,8 +1,5 @@
 # ICI CA COMPILE
 
-
-# ICI CA COMPILE
-
 New programming language using a Flex/Bison transpiler in C that produces IL Assembly code. 
 
 
