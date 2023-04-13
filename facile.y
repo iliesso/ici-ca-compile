@@ -192,7 +192,7 @@ read:
 //changer la position du statement, instruction, ajouter condition.
 statement:
 	TOK_IF TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE TOK_ELSE TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
-		$$ = g_node_new("if");
+		$$ = g_node_new("ifelse");
 		g_node_append($$, $3); //what needs to be tested
 		g_node_append($$, $6);
 		g_node_append($$, $10);
@@ -363,9 +363,9 @@ void produce_code(GNode* node){
 	} else if (node->data == "affectation"){
 		produce_code(g_node_nth_child(node, 1));
 		fprintf(yyout, "stloc\t%ld\n", (long)g_node_nth_child(g_node_nth_child(node, 0), 0)->data -1);
-	} else if (node->data == "if") {
+	} else if (node->data == "ifelse") {
 		produce_code(g_node_nth_child(node, 0)); // Produce code for boolean expression
-		char* else_label = label();  // Jump to else block if false
+		char* else_label = label();  // Jump to else branchement if false
 		fprintf(yyout, "brfalse\t%s\n", else_label);
 		produce_code(g_node_nth_child(node, 1)); // Produce code for if block
 
@@ -375,6 +375,12 @@ void produce_code(GNode* node){
 		fprintf(yyout, "%s:\n", else_label);  // Produce code for else block
 		produce_code(g_node_nth_child(node, 2));
 		
+		fprintf(yyout, "%s:\n", end_label);  	// End label
+	} else if (node->data == "if") {
+		produce_code(g_node_nth_child(node, 0)); // Produce code for boolean expression
+		char* end_label = label();
+		fprintf(yyout, "brfalse\t%s\n", end_label);
+		produce_code(g_node_nth_child(node, 1)); // Produce code for if block
 		fprintf(yyout, "%s:\n", end_label);  	// End label
 	} else if (node->data == "greater"){
 		produce_code(g_node_nth_child(node, 0));
