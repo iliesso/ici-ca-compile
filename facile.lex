@@ -8,23 +8,23 @@
 
 %%
 
-if {
+"if" {
     return TOK_IF;
 }
 
-then {
+"then" {
     return TOK_THEN;
 }
 
-else {
+"else" {
     return TOK_ELSE;
 }
 
-elseif {
+"elseif" {
     return TOK_ELSEIF;
 }
 
-endif {
+"endif" {
     return TOK_ENDIF;
 }
 
@@ -120,7 +120,7 @@ return TOK_AND;
 return TOK_OR;
 }
 
-[a-zA-Z][a-zA-Z0-9_]* {
+[a-zA-Z][a-zA-Z0-9]* {
   yylval.string = yytext;
   return TOK_IDENTIFIER;
 }

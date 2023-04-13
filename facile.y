@@ -160,27 +160,12 @@ code:
 		$$ = g_node_new("");
 	};
 
-//changer la position du statement, instruction, ajouter condition.
-statement:
-	TOK_IF TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE TOK_ELSE TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
-		$$ = $3; //what needs to be tested
-		
-	}
-|
-	TOK_IF TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
-		$$ = g_node_new("condition"); //Return value
-		if($3 != 0){			   //Si le test marche, alors return prend la valeur
-			$$ = $6;
-		}
-	}
-|
-	expression;
-
 //On définit ici tout ce qui doit être reconnu comme une instruction.
 instruction: 
 	affectation |
 	print |
-	read;
+	read |
+	statement;
 
 //On définit ici tout ce qui doit être reconnu comme une affectation.
 affectation:
@@ -201,6 +186,58 @@ read:
 	TOK_READ expression TOK_SEMI_COLON {
 		$$ = g_node_new("read");
 		g_node_append($$, $2);
+	}
+;
+
+//changer la position du statement, instruction, ajouter condition.
+statement:
+	TOK_IF TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE TOK_ELSE TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
+		$$ = g_node_new("if");
+		g_node_append($$, $3); //what needs to be tested
+		g_node_append($$, $6);
+		g_node_append($$, $10);
+		
+	}
+|
+	TOK_IF TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
+		$$ = g_node_new("if");
+		g_node_append($$, $3); //what needs to be tested
+		g_node_append($$, $6);
+	};
+
+expression:
+	identifier 
+|
+	number
+|
+	boolean
+|
+	expression TOK_ADD expression {
+		$$ = g_node_new("add");
+		g_node_append($$, $1);
+		g_node_append($$, $3);
+	}
+|
+	expression TOK_SUB expression {
+		$$ = g_node_new("sub");
+		g_node_append($$, $1);
+		g_node_append($$, $3);
+	}
+|
+	expression TOK_MUL expression {
+		$$ = g_node_new("mul");
+		g_node_append($$, $1);
+		g_node_append($$, $3);
+	}
+|
+	expression TOK_DIV expression {
+		$$ = g_node_new("div");
+		g_node_append($$, $1);
+		g_node_append($$, $3);
+	}
+|
+	TOK_OPEN_PARENTHESIS expression TOK_CLOSE_PARENTHESIS {
+		$$ = $2;
 	}
 ;
 
@@ -264,51 +301,16 @@ boolean:
 |
 	TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS {
 		$$ = $2;
-	}
+	};
 
 true:
 	TOK_TRUE TOK_SEMI_COLON {
 		$$ = g_node_new("true");
-		$$ = "true";
-	}
+	};
 
 false:
 	TOK_FALSE TOK_SEMI_COLON {
 		$$ = g_node_new("false");
-		$$ = "false";
-	}
-
-expression:
-	identifier 
-|
-	number
-|
-	expression TOK_ADD expression {
-		$$ = g_node_new("add");
-		g_node_append($$, $1);
-		g_node_append($$, $3);
-	}
-|
-	expression TOK_SUB expression {
-		$$ = g_node_new("sub");
-		g_node_append($$, $1);
-		g_node_append($$, $3);
-	}
-|
-	expression TOK_MUL expression {
-		$$ = g_node_new("mul");
-		g_node_append($$, $1);
-		g_node_append($$, $3);
-	}
-|
-	expression TOK_DIV expression {
-		$$ = g_node_new("div");
-		g_node_append($$, $1);
-		g_node_append($$, $3);
-	}
-|
-	TOK_OPEN_PARENTHESIS expression TOK_CLOSE_PARENTHESIS {
-		$$ = $2;
 	}
 ;
 
@@ -341,8 +343,7 @@ number:
  */
 
 int label_counter = 0;
-
-char* new_label() {
+char* label() {
     char* label = malloc(20 * sizeof(char));
     sprintf(label, "L%d", label_counter++);
     return label;
@@ -364,17 +365,17 @@ void produce_code(GNode* node){
 		fprintf(yyout, "stloc\t%ld\n", (long)g_node_nth_child(g_node_nth_child(node, 0), 0)->data -1);
 	} else if (node->data == "if") {
 		produce_code(g_node_nth_child(node, 0)); // Produce code for boolean expression
-		int else_label = new_label();  // Jump to else block if false
-		fprintf(yyout, "brfalse\tL%d\n", else_label);
+		char* else_label = label();  // Jump to else block if false
+		fprintf(yyout, "brfalse\t%s\n", else_label);
 		produce_code(g_node_nth_child(node, 1)); // Produce code for if block
 
-		int end_label = new_label();
-		fprintf(yyout, "br\tL%d\n", end_label);
+		char* end_label = label();
+		fprintf(yyout, "br\t%s\n", end_label);
 		
-		fprintf(yyout, "L%d:\n", else_label);  // Produce code for else block
+		fprintf(yyout, "%s:\n", else_label);  // Produce code for else block
 		produce_code(g_node_nth_child(node, 2));
 		
-		fprintf(yyout, "L%d:\n", end_label);  	// End label
+		fprintf(yyout, "%s:\n", end_label);  	// End label
 	} else if (node->data == "greater"){
 		produce_code(g_node_nth_child(node, 0));
 		produce_code(g_node_nth_child(node, 1));
