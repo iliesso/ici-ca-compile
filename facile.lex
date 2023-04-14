@@ -28,6 +28,18 @@
     return TOK_ENDIF;
 }
 
+"while" {
+    return TOK_WHILE;
+}
+
+"break" {
+    return TOK_BREAK;
+}
+
+"continue" {
+    return TOK_CONTINUE;
+}
+
 ";" {
 return TOK_SEMI_COLON;
 }
@@ -125,7 +137,7 @@ return TOK_OR;
   return TOK_IDENTIFIER;
 }
 
-"0" {
+[0-9] {
   sscanf(yytext, "%lu", &yylval.number);
   return TOK_NUMBER;
 }

@@ -63,27 +63,30 @@ extern int yydebug;
     TOK_ELSEIF = 264,              /* "elseif"  */
     TOK_THEN = 265,                /* "then"  */
     TOK_ENDIF = 266,               /* "endif"  */
-    TOK_ADD = 267,                 /* TOK_ADD  */
-    TOK_SUB = 269,                 /* TOK_SUB  */
-    TOK_MUL = 271,                 /* TOK_MUL  */
-    TOK_DIV = 273,                 /* TOK_DIV  */
-    TOK_OPEN_PARENTHESIS = 275,    /* "("  */
-    TOK_CLOSE_PARENTHESIS = 276,   /* ")"  */
-    TOK_OPEN_BRACE = 277,          /* "{"  */
-    TOK_CLOSE_BRACE = 278,         /* "}"  */
-    TOK_PRINT = 279,               /* "print"  */
-    TOK_READ = 280,                /* "read"  */
-    TOK_TRUE = 281,                /* "true"  */
-    TOK_FALSE = 282,               /* "false"  */
-    TOK_GREATER_EQUAL = 283,       /* ">="  */
-    TOK_LESSER_EQUAL = 284,        /* "<="  */
-    TOK_GREATER = 285,             /* ">"  */
-    TOK_LESSER = 286,              /* "<"  */
-    TOK_EQUALS = 287,              /* "="  */
-    TOK_NOTEQUALS = 288,           /* "#"  */
-    TOK_NOT = 289,                 /* "not"  */
-    TOK_AND = 290,                 /* "and"  */
-    TOK_OR = 291                   /* "or"  */
+    TOK_WHILE = 267,               /* "while"  */
+    TOK_BREAK = 268,               /* "break"  */
+    TOK_CONTINUE = 269,            /* "continue"  */
+    TOK_ADD = 270,                 /* TOK_ADD  */
+    TOK_SUB = 272,                 /* TOK_SUB  */
+    TOK_MUL = 274,                 /* TOK_MUL  */
+    TOK_DIV = 276,                 /* TOK_DIV  */
+    TOK_OPEN_PARENTHESIS = 278,    /* "("  */
+    TOK_CLOSE_PARENTHESIS = 279,   /* ")"  */
+    TOK_OPEN_BRACE = 280,          /* "{"  */
+    TOK_CLOSE_BRACE = 281,         /* "}"  */
+    TOK_PRINT = 282,               /* "print"  */
+    TOK_READ = 283,                /* "read"  */
+    TOK_TRUE = 284,                /* "true"  */
+    TOK_FALSE = 285,               /* "false"  */
+    TOK_GREATER_EQUAL = 286,       /* ">="  */
+    TOK_LESSER_EQUAL = 287,        /* "<="  */
+    TOK_GREATER = 288,             /* ">"  */
+    TOK_LESSER = 289,              /* "<"  */
+    TOK_EQUALS = 290,              /* "="  */
+    TOK_NOTEQUALS = 291,           /* "#"  */
+    TOK_NOT = 292,                 /* "not"  */
+    TOK_AND = 293,                 /* "and"  */
+    TOK_OR = 294                   /* "or"  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -98,7 +101,7 @@ gulong number;
 gchar *string;
 GNode * node;
 
-#line 102 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.y.h"
+#line 105 "/home/ilja/Documents/Work/L3 Info/projetFlexbison/build/facile.y.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

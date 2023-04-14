@@ -103,6 +103,9 @@ GNode * node;
 %token TOK_ELSEIF "elseif"
 %token TOK_THEN	"then"
 %token TOK_ENDIF "endif"
+%token TOK_WHILE "while"
+%token TOK_BREAK "break"
+%token TOK_CONTINUE "continue"
 %left TOK_ADD	"+"
 %left TOK_SUB	"-"
 %left TOK_MUL	"*"
@@ -134,6 +137,7 @@ GNode * node;
 %type<node> affectation
 %type<node> number
 %type<node> statement
+%type<node> loop
 %type<node> boolean
 %type<node> true
 %type<node> false
@@ -165,6 +169,7 @@ instruction:
 	affectation |
 	print |
 	read |
+	loop |
 	statement;
 
 //On définit ici tout ce qui doit être reconnu comme une affectation.
@@ -189,14 +194,29 @@ read:
 	}
 ;
 
+loop:
+	TOK_WHILE TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
+		$$ = g_node_new("while");
+		g_node_append($$, $3);   //what needs to be tested
+		g_node_append($$, $6);   //instruction
+	}
+|
+	TOK_BREAK TOK_SEMI_COLON {
+		$$ = g_node_new("break");
+	}
+|
+	TOK_CONTINUE TOK_SEMI_COLON {
+		$$ = g_node_new("continue");
+	}
+;
+
 //changer la position du statement, instruction, ajouter condition.
 statement:
 	TOK_IF TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE TOK_ELSE TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
 		$$ = g_node_new("ifelse");
-		g_node_append($$, $3); //what needs to be tested
-		g_node_append($$, $6);
-		g_node_append($$, $10);
-		
+		g_node_append($$, $3);   //what needs to be tested
+		g_node_append($$, $6);   //instruction
+		g_node_append($$, $10);  //else instruction
 	}
 |
 	TOK_IF TOK_OPEN_PARENTHESIS boolean TOK_CLOSE_PARENTHESIS TOK_OPEN_BRACE instruction TOK_CLOSE_BRACE{
@@ -356,6 +376,8 @@ char* label() {
 
 void produce_code(GNode* node){
 	//si l'arbre syntaxique trouve un noeud "code"
+	char* start_label_while = NULL;
+    char* end_label_while = NULL;
 	if (node->data == "code"){
 		//Aller chercher chaque "mot" (noeud) du code pour le traduire
 		produce_code(g_node_nth_child(node, 0));
@@ -363,25 +385,42 @@ void produce_code(GNode* node){
 	} else if (node->data == "affectation"){
 		produce_code(g_node_nth_child(node, 1));
 		fprintf(yyout, "stloc\t%ld\n", (long)g_node_nth_child(g_node_nth_child(node, 0), 0)->data -1);
+	} else if (node->data == "while"){
+
+		char* start_label_while = label();
+        char* end_label_while = label();
+		fprintf(yyout, "br\t%s\n", start_label_while);  //jump to start of loop
+		fprintf(yyout, "%s:\n", start_label_while);
+		produce_code(g_node_nth_child(node, 0));  //boolean expression
+
+		fprintf(yyout, "brfalse\t%s\n", end_label_while);  //exit loop if false
+
+		produce_code(g_node_nth_child(node, 1));  //expressions
+		fprintf(yyout, "br\t%s\n", start_label_while);  //jump to start of loop
+		fprintf(yyout, "%s:\n", end_label_while);
+	} else if (node->data == "break"){
+		fprintf(yyout, "br\t%s\n", end_label_while);
+	} else if (node->data == "continue"){
+		fprintf(yyout, "br\t%s\n", start_label_while);
 	} else if (node->data == "ifelse") {
-		produce_code(g_node_nth_child(node, 0)); // Produce code for boolean expression
-		char* else_label = label();  // Jump to else branchement if false
+		produce_code(g_node_nth_child(node, 0)); //boolean expression
+		char* else_label = label();  //Jump to else branchement if false
 		fprintf(yyout, "brfalse\t%s\n", else_label);
-		produce_code(g_node_nth_child(node, 1)); // Produce code for if block
+		produce_code(g_node_nth_child(node, 1)); //if block
 
 		char* end_label = label();
 		fprintf(yyout, "br\t%s\n", end_label);
 		
-		fprintf(yyout, "%s:\n", else_label);  // Produce code for else block
-		produce_code(g_node_nth_child(node, 2));
+		fprintf(yyout, "%s:\n", else_label);
+		produce_code(g_node_nth_child(node, 2)); //else block
 		
-		fprintf(yyout, "%s:\n", end_label);  	// End label
+		fprintf(yyout, "%s:\n", end_label);
 	} else if (node->data == "if") {
-		produce_code(g_node_nth_child(node, 0)); // Produce code for boolean expression
+		produce_code(g_node_nth_child(node, 0));
 		char* end_label = label();
 		fprintf(yyout, "brfalse\t%s\n", end_label);
-		produce_code(g_node_nth_child(node, 1)); // Produce code for if block
-		fprintf(yyout, "%s:\n", end_label);  	// End label
+		produce_code(g_node_nth_child(node, 1));
+		fprintf(yyout, "%s:\n", end_label);  
 	} else if (node->data == "greater"){
 		produce_code(g_node_nth_child(node, 0));
 		produce_code(g_node_nth_child(node, 1));

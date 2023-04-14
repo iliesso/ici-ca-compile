@@ -1,10 +1,6 @@
 read a;
 read b;
-c := 0;
-if (a>b) {
-    if (a > c){
-        print c;
-    }
-} else {
-    print b;
+while (a>b) {
+    a := a-1;
 }
+print a;
