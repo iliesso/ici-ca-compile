@@ -387,8 +387,8 @@ void produce_code(GNode* node){
 		fprintf(yyout, "stloc\t%ld\n", (long)g_node_nth_child(g_node_nth_child(node, 0), 0)->data -1);
 	} else if (node->data == "while"){
 
-		char* start_label_while = label();
-        char* end_label_while = label();
+		start_label_while = label();
+        end_label_while = label();
 		fprintf(yyout, "br\t%s\n", start_label_while);  //jump to start of loop
 		fprintf(yyout, "%s:\n", start_label_while);
 		produce_code(g_node_nth_child(node, 0));  //boolean expression
